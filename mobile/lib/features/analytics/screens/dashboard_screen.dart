@@ -112,7 +112,7 @@ class DashboardScreen extends ConsumerWidget {
                       Expanded(
                         child: KpiCard(
                           label: 'Success Rate',
-                          value: '${(stats.successRate * 100).toStringAsFixed(1)}%',
+                          value: '${(stats.successRate > 1.0 ? stats.successRate : stats.successRate * 100).toStringAsFixed(1)}%',
                           icon: Icons.check_circle_outline_rounded,
                           iconColor: Colors.teal,
                           subtitle: '${stats.totalTransactions} txns',

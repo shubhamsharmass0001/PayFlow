@@ -62,15 +62,20 @@ class AnalyticsRepository {
     final r = await _client.dio.get<Map<String, dynamic>>(
       '/api/v1/merchants/$merchantId/analytics/payment-methods',
     );
-    final list = (r.data!['methods_summary'] ?? r.data!['breakdown'] as List?) ?? [];
-    return list.map((item) {
-      final itemMap = item as Map<String, dynamic>;
-      return PaymentMethodStat(
-        method: (itemMap['method'] ?? itemMap['payment_method'] ?? 'Unknown').toString(),
-        count: (itemMap['count'] ?? itemMap['total_count'] as num?)?.toInt() ?? 0,
-        amount: double.tryParse('${itemMap['amount'] ?? itemMap['total_amount'] ?? 0}') ?? 0.0,
-      );
-    }).toList();
+    final rawList = (r.data?['methods_summary'] ?? r.data?['breakdown']) as List? ?? [];
+    final List<PaymentMethodStat> result = [];
+    for (final item in rawList) {
+      if (item is Map) {
+        result.add(
+          PaymentMethodStat(
+            method: (item['payment_method'] ?? item['method'] ?? 'UPI').toString(),
+            count: (item['total_count'] ?? item['count'] as num?)?.toInt() ?? 0,
+            amount: double.tryParse('${item['total_amount'] ?? item['amount'] ?? 0}') ?? 0.0,
+          ),
+        );
+      }
+    }
+    return result;
   }
 }
 
