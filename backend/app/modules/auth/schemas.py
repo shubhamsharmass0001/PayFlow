@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, model_validator
 
 
 class RegisterRequest(BaseModel):
@@ -12,8 +12,17 @@ class RegisterRequest(BaseModel):
 
 
 class LoginRequest(BaseModel):
-    username: str = Field(description="Email address or phone number")
+    username: Optional[str] = Field(default=None, description="Email address or phone number")
+    email: Optional[str] = Field(default=None, description="Alternative email address")
     password: str = Field(min_length=1)
+
+    @model_validator(mode="after")
+    def populate_username(self) -> "LoginRequest":
+        if not self.username and self.email:
+            self.username = self.email
+        if not self.username:
+            raise ValueError("Either username or email must be provided.")
+        return self
 
 
 class TokenResponse(BaseModel):

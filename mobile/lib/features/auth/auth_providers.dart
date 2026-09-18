@@ -39,10 +39,10 @@ class AuthState {
 
 class AuthNotifier extends Notifier<AuthState> {
   static const demoUser = UserModel(
-    id: 'usr_demo_owner_01',
+    id: '9c47843f-668c-465d-9e6a-2a927f0fe4dd',
     email: 'owner@payflow.demo',
     fullName: 'Aakash Sharma (Owner)',
-    merchantId: 'mch_01h8demo0000000000000001',
+    merchantId: '0501b32c-8d70-4c2e-b380-3cb7289f21fb',
   );
 
   @override

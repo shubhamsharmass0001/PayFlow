@@ -21,8 +21,7 @@ final apiClientProvider = Provider<ApiClient>((ref) {
 class ActiveMerchantNotifier extends Notifier<String> {
   @override
   String build() {
-    // Watch user in authNotifierProvider if available
-    return '00000000-0000-0000-0000-000000000001';
+    return '0501b32c-8d70-4c2e-b380-3cb7289f21fb';
   }
 
   void setMerchantId(String id) => state = id;
