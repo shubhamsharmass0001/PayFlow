@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'core/providers.dart';
 import 'theme/theme.dart';
 import 'routing/app_router.dart';
 
@@ -17,17 +18,15 @@ class PayFlowApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Router is a Riverpod provider — its RouterNotifier watches authState
-    // and calls notifyListeners() on every auth status change, causing
-    // go_router to re-evaluate the redirect callback automatically.
     final router = ref.watch(routerProvider);
+    final themeMode = ref.watch(themeModeProvider);
 
     return MaterialApp.router(
       title: 'PayFlow',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
-      themeMode: ThemeMode.system,
+      themeMode: themeMode,
       routerConfig: router,
     );
   }
