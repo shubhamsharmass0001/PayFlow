@@ -23,6 +23,7 @@ import '../features/settlements/screens/settlements_screen.dart';
 import '../features/staff/screens/staff_screen.dart';
 import '../features/transactions/screens/transaction_detail_screen.dart';
 import '../features/transactions/screens/transactions_screen.dart';
+import '../features/upi_qr/screens/collect_screen.dart';
 import '../shell/app_shell.dart';
 
 // ── RouterNotifier: bridges Riverpod → go_router refresh ──────────────────────
@@ -43,13 +44,8 @@ class RouterNotifier extends ChangeNotifier {
 
     final isLoading = authState.status == AuthStatus.initial;
     final isAuthenticated = authState.status == AuthStatus.authenticated;
-    final isUnauthenticated = authState.status == AuthStatus.unauthenticated;
 
     if (isLoading) return null;
-
-    final isPublicRoute = _publicRoutes.any(
-      (r) => location == r || location.startsWith(r),
-    );
 
     if (location == '/' || location == '/login') {
       return '/dashboard';
@@ -161,7 +157,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: '/collect',
                 name: 'collect',
-                builder: (context, state) => const InvoicesScreen(),
+                builder: (context, state) => const CollectScreen(),
               ),
             ],
           ),
