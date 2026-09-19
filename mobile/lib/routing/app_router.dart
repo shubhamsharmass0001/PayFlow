@@ -57,12 +57,6 @@ class RouterNotifier extends ChangeNotifier {
 
     return null;
   }
-
-  static const _publicRoutes = [
-    '/login',
-    '/register',
-    '/onboarding',
-  ];
 }
 
 // ── Provider ───────────────────────────────────────────────────────────────────
